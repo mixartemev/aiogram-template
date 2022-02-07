@@ -11,6 +11,7 @@ class Config(NamedTuple):
     BASE_DIR = Path(__name__).resolve().parent.parent
 
     BOT_TOKEN = __env.str('BOT_TOKEN')
+    WH_HOST = __env.str('WH_HOST')
 
     ADMINS = __env.list('ADMIN_ID')
 
