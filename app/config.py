@@ -12,9 +12,9 @@ class Config(NamedTuple):
 
     BOT_TOKEN = __env.str('BOT_TOKEN')
     WH_HOST = __env.str('WH_HOST')
-
+    APP_PORT = __env.str('APP_PORT')
+    REDIS_DSN = __env.str('REDIS_DSN')
     ADMINS = __env.list('ADMIN_ID')
-
     MONGODB_DATABASE = __env.str('MONGODB_DATABASE')
     MONGODB_USERNAME = __env.str('MONGODB_USERNAME')
     MONGODB_PASSWORD = __env.str('MONGODB_PASSWORD')

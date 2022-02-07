@@ -78,7 +78,7 @@ class MongoStorage(BaseStorage):
 
         return db_filter
 
-    def close(self) -> None:
+    async def close(self) -> None:
         self._mongo.close()
 
     @asynccontextmanager
@@ -111,7 +111,10 @@ class MongoStorage(BaseStorage):
         bot: Bot,
         key: StorageKey,
     ) -> Optional[str]:
-        result = await self._db[STATE].find_one(filter=self._get_db_filter(key))
+        clct = self._db[STATE]
+        fltr = self._get_db_filter(key)
+        result = clct.find_one(filter=fltr)
+        result = await result
         return result.get("state") if result else None
 
     async def set_data(

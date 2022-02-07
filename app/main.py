@@ -1,7 +1,9 @@
 import logging
+
 from aiohttp import web
 from aiogram import Bot, Dispatcher, Router
 from aiogram.dispatcher.webhook.aiohttp_server import SimpleRequestHandler, setup_application
+from aiogram.dispatcher.fsm.storage.redis import RedisStorage
 
 from app import handlers, middlewares
 from app.config import Config
@@ -13,12 +15,11 @@ from app.utils.set_bot_commands import set_commands
 
 WEB_SERVER_PORT = 8081
 BOT_PATH = f"/wh/{Config.BOT_TOKEN}"
+REDIS_DSN = "redis://127.0.0.1:6379"
 
 mongo = MyBeanieMongo()
-storage = MongoStorage.from_url(
-    Config.MONGODB_URI,
-    f"{Config.MONGODB_DATABASE}_fsm",
-)
+storage = RedisStorage.from_url(REDIS_DSN)
+# storage = MongoStorage.from_url(Config.MONGODB_URI, f"{Config.MONGODB_DATABASE}_fsm")
 
 
 async def on_startup(dispatcher: Dispatcher, bot: Bot):
@@ -31,7 +32,7 @@ async def on_startup(dispatcher: Dispatcher, bot: Bot):
 async def on_shutdown(dispatcher: Dispatcher, bot: Bot):
     logging.warning("Shutting down..")
     await bot.session.close()
-    storage.close()
+    await storage.close()
     await mongo.close()
     # Remove webhook (not acceptable in some cases)
     await bot.delete_webhook()
@@ -56,7 +57,5 @@ def main():
 
     app = web.Application()
     SimpleRequestHandler(dispatcher=dp, bot=bot).register(app, path=BOT_PATH)
-
     setup_application(app, dp, bot=bot)
-
     web.run_app(app, port=WEB_SERVER_PORT)

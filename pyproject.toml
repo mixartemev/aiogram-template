@@ -15,6 +15,7 @@ uvloop = "^0.16.0"
 ujson = "^5.1.0"
 aiohttp = {extras = ["speedups"], version = "^3.8.1"}
 aiolimiter = "^1.0.0"
+aioredis = "^2.0.1"
 
 [tool.poetry.dev-dependencies]
 
