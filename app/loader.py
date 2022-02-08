@@ -1,7 +1,7 @@
 from aiohttp import web
 from aiogram import Bot, Dispatcher, Router
 from aiogram.dispatcher.webhook.aiohttp_server import SimpleRequestHandler, setup_application
-from aiogram.dispatcher.fsm.storage.redis import RedisStorage
+from aiogram.dispatcher.fsm.storage.redis import RedisStorage, DefaultKeyBuilder
 
 from app import handlers, middlewares
 from app.cfg import Cfg
@@ -11,7 +11,7 @@ from app.utils.db import MyBeanieMongo
 logger.setup_logger()
 
 mongo = MyBeanieMongo()
-storage = RedisStorage.from_url(Cfg.REDIS_DSN)
+storage = RedisStorage.from_url(Cfg.REDIS_DSN, key_builder=DefaultKeyBuilder(with_destiny=True))
 
 bt = Bot(token=Cfg.BOT_TOKEN, parse_mode='HTML')
 dp = Dispatcher(storage=storage)
