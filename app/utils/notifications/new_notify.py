@@ -1,7 +1,7 @@
 from aiogram import Bot, html
 from aiogram.types import User, Chat
 
-from app.config import Config
+from app.cfg import Cfg
 from app.utils.broadcast import broadcast_smth, from_iterable
 
 
@@ -17,7 +17,7 @@ async def notify_new_user(user: User, bot: Bot) -> int:
     if pics and pics.total_count > 0:
         photo = pics.photos[0][-1].file_id
 
-    admins = from_iterable(Config.ADMINS)
+    admins = from_iterable(Cfg.ADMINS)
 
     if photo:
         return await broadcast_smth(admins, bot.send_photo, False, photo=photo, caption='\n'.join(txt))
@@ -35,6 +35,6 @@ async def notify_new_group(chat: Chat, bot: Bot) -> int:
         f"Members: {await bot.get_chat_member_count(chat.id)}",
         f"username: @{chat.username}",
     ]
-    admins = from_iterable(Config.ADMINS)
+    admins = from_iterable(Cfg.ADMINS)
 
     return await broadcast_smth(admins, bot.send_message, False, text='\n'.join(txt))

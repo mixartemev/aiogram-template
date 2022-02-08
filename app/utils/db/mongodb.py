@@ -7,11 +7,11 @@ from motor.core import AgnosticDatabase, AgnosticCollection, AgnosticClient
 from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorDatabase
 
 from app import models
-from app.config import Config
+from app.cfg import Cfg
 
 
 class MyMongoClient:
-    def __init__(self, db_name=Config.MONGODB_DATABASE, uri=Config.MONGODB_URI):
+    def __init__(self, db_name=Cfg.MONGODB_DATABASE, uri=Cfg.MONGODB_URI):
         self._db_name: str = db_name
         self._uri = uri
 
@@ -22,7 +22,7 @@ class MyMongoClient:
         if isinstance(self._mongo, AsyncIOMotorClient):
             return self._mongo
         try:
-            logging.debug("Connection to {}", self._uri)
+            logging.debug("Connection to %s", self._uri)
             self._mongo = AsyncIOMotorClient(self._uri)
             logging.debug("Connected successful")
         except pymongo.errors.ConfigurationError as e:

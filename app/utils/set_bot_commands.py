@@ -1,7 +1,7 @@
 from aiogram import types, Bot
 from aiogram.types import BotCommandScopeChat
 
-from app.config import Config
+from app.cfg import Cfg
 
 
 async def set_commands(bot: Bot) -> None:
@@ -11,7 +11,7 @@ async def set_commands(bot: Bot) -> None:
             types.BotCommand(command="help", description="Вывести справку"),
         ]
     )
-    for admin in Config.ADMINS:
+    for admin in Cfg.ADMINS:
         await bot.set_my_commands(
             [
                 types.BotCommand(command="amount", description="Количество юзеров в бд"),

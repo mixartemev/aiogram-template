@@ -1,9 +1,36 @@
 import logging
 
-from app.main import main
+from aiohttp import web
+from aiogram import Bot
+
+from app.cfg import Cfg
+from app.loader import mongo, dp, ap, storage
+from app.utils.set_bot_commands import set_commands
+from app.utils.notifications.startup_notify import notify_superusers
+
+
+async def on_startup(bot: Bot):
+    await bot.set_webhook(Cfg.WH_HOST+Cfg.BOT_PATH)
+    await mongo.init_db()
+    await notify_superusers(bot)
+    await set_commands(bot)
+
+
+async def on_shutdown(bot: Bot):
+    logging.warning("Shutting down..")
+    await storage.close()
+    await mongo.close()
+    await bot.delete_webhook()  # Remove webhook (not acceptable in some cases)
+    await bot.session.close()
+    logging.warning("Bye!")
+
 
 if __name__ == '__main__':
     try:
-        main()
+        dp.startup.register(on_startup)
+        dp.shutdown.register(on_shutdown)
+
+        web.run_app(ap, port=Cfg.APP_PORT)
+
     except (KeyboardInterrupt, SystemExit):
         logging.info("Goodbye")
