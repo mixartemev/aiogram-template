@@ -2,16 +2,15 @@ import logging
 
 from aiohttp import web
 from aiogram import Bot
-from aiogram.dispatcher.fsm.state import StatesGroup, State
 
+from app import middlewares, handlers
 from app.cfg import Cfg
-from app.loader import mongo, dp, ap, storage
+from app.loader import mongo, dp, ap, storage, registry, regular_router, admin_router
 from app.utils.set_bot_commands import set_commands
 from app.utils.notifications.startup_notify import notify_superusers
+from app.dialogs.sg import MainSG
 
-from aiogram_dialog import Dialog, Window, DialogRegistry
-from aiogram_dialog.widgets.kbd import Cancel
-from aiogram_dialog.widgets.text import Const
+from aiogram_dialog.tools import render_transitions, render_preview
 
 
 async def on_startup(bot: Bot):
@@ -19,6 +18,8 @@ async def on_startup(bot: Bot):
     await mongo.init_db()
     await notify_superusers(bot)
     await set_commands(bot)
+    await render_preview(registry, "preview.html")  # render windows preview
+    render_transitions(registry)  # render graph with current transtions
 
 
 async def on_shutdown(bot: Bot):
@@ -30,28 +31,15 @@ async def on_shutdown(bot: Bot):
     logging.warning("Bye!")
 
 
-# main dialog
-class MainSG(StatesGroup):
-    main = State()
-
-
-main_menu = Dialog(
-    Window(
-        Const("Hello, unknown person"),
-        Cancel(),
-        state=MainSG.main
-    )
-)
-
-
 if __name__ == '__main__':
     try:
+        middlewares.setup(dp)
+        handlers.setup_all_handlers(regular_router, admin_router)
+
         dp.startup.register(on_startup)
         dp.shutdown.register(on_shutdown)
 
-        registry = DialogRegistry(dp)
-        registry.register_start_handler(MainSG.main)  # resets stack and start dialogs on /start command
-        registry.register(main_menu)
+        registry.register_start_handler(MainSG.home)  # resets stack and start dialogs on /start command
 
         web.run_app(ap, port=Cfg.APP_PORT)
 

@@ -1,0 +1,72 @@
+# English translations for PROJECT.
+# Copyright (C) 2022 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2022-02-09 22:10+0300\n"
+"PO-Revision-Date: 2022-02-09 23:13+0300\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: en\n"
+"Language-Team: en <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: dialogs/events/deposit.py:24 dialogs/windows/start.py:15
+msgid "Deposit"
+msgstr ""
+
+#: dialogs/events/deposit.py:25 keyboards/private/buttons/cancel.py:4
+msgid "Cancel"
+msgstr ""
+
+#: dialogs/events/deposit.py:29
+msgid "Balance charging"
+msgstr ""
+
+#: dialogs/events/deposit.py:30
+msgid "For using service"
+msgstr ""
+
+#: dialogs/events/deposit.py:44
+msgid "Resulting charge amount"
+msgstr ""
+
+#: dialogs/events/deposit.py:48
+msgid "Acquiring fee"
+msgstr ""
+
+#: dialogs/events/deposit.py:60
+msgid "Input only DIGITS of ₽ amount please!"
+msgstr ""
+
+#: dialogs/events/deposit.py:62
+msgid "You can not deposit less than 10₽"
+msgstr ""
+
+#: dialogs/windows/deposit.py:12
+msgid "Input any amount or select one of the preset amount to deposit"
+msgstr ""
+
+#: dialogs/windows/deposit.py:20
+msgid "Back"
+msgstr ""
+
+#: dialogs/windows/start.py:12
+msgid "Hi"
+msgstr ""
+
+#: dialogs/windows/start.py:13
+msgid "Your balance"
+msgstr ""
+
+#: handlers/private/start.py:7
+msgid "Hello, {name}!"
+msgstr ""
+

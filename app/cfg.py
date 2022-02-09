@@ -7,6 +7,7 @@ class Cfg(NamedTuple):
     __env.read_env()
 
     BOT_TOKEN = __env.str('BOT_TOKEN')
+    PAY_TOKEN = __env.str('PAY_TOKEN')
     WH_HOST = __env.str('WH_HOST')
     BOT_PATH = f"/wh/{BOT_TOKEN}"
     APP_PORT = __env.int('APP_PORT')
