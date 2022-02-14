@@ -10,16 +10,12 @@ from app.utils.set_bot_commands import set_commands
 from app.utils.notifications.startup_notify import notify_superusers
 from app.dialogs.sg import MainSG
 
-from aiogram_dialog.tools import render_transitions, render_preview
-
 
 async def on_startup(bot: Bot):
     await bot.set_webhook(Cfg.WH_HOST+Cfg.BOT_PATH)
     await mongo.init_db()
     await notify_superusers(bot)
     await set_commands(bot)
-    await render_preview(registry, "preview.html")  # render windows preview
-    render_transitions(registry)  # render graph with current transtions
 
 
 async def on_shutdown(bot: Bot):

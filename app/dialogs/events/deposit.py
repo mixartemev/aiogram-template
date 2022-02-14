@@ -56,9 +56,9 @@ async def success_payment_handler(msg: Message, dlg: Dialog, mng: DialogManager)
         await _tsact_save(msg, mng)
         await mng.done()
     else:
-        if str(amount := int(msg.text)) != msg.text:
+        if not msg.text.isnumeric():
             return await msg.answer(_('Input only DIGITS of ₽ amount please!'))
-        elif (amount := int(amount)) < 10:
+        elif (amount := int(msg.text)) < 10:
             return await msg.answer(_('You can not deposit less than 10₽'))
         # await msg.bot.delete_message(msg.chat.id, msg.message_id)
         await _send_invoice(amount, mng)

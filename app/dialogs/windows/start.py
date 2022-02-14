@@ -4,7 +4,7 @@ from aiogram_dialog.widgets.input import MessageInput
 from aiogram_dialog.widgets.kbd import Start, Row, Cancel
 
 from app.dialogs import sg
-from app.dialogs.events.deposit import success_payment_handler_from_main
+# from app.dialogs.events.deposit import success_payment_handler_from_main
 from app.dialogs.getters.start import get_home
 from app.dialogs.widgets.lang import Lang as _
 
