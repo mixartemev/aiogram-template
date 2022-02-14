@@ -61,7 +61,7 @@ async def get_exists_users(m: Message, bot: Bot):
                 user.status = "member"
                 await user.save()
                 count += 1
-        except TelegramAPIError:  # TODO check if it working
+        except TelegramAPIError:  # TODO check it is working
             await user.delete()
         except Exception as e:
             user.status = "left"
